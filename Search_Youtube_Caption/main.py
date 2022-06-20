@@ -1,6 +1,7 @@
 from Search_Youtube_Caption.pipeline.Steps.download_captions import DownloadCaptions
 from Search_Youtube_Caption.pipeline.Steps.step import StepException
 from Search_Youtube_Caption.pipeline.Steps.video_list import GetVideoList
+from Search_Youtube_Caption.pipeline.Steps.read_caption import ReadCaption
 from Search_Youtube_Caption.pipeline.pipeline import Pipeline
 from Search_Youtube_Caption.utils import Utils
 from Search_Youtube_Caption.pipeline.Steps.preflight import Preflight
@@ -23,6 +24,7 @@ def main():
         Preflight(),
         GetVideoList(),
         DownloadCaptions(),
+        ReadCaption(),
         Postflight(),
              ]
 
