@@ -1,15 +1,17 @@
+import os
+
+from pprint import pprint
+
 from .step import Step
+from Search_Youtube_Caption.setting import CAPTION_DIR
 
 
 class ReadCaption(Step):
     def process(self, data, inputs, utils):
-
-        for yt in data:
-            if not utils.caption_file_exists(yt):
-                continue
-
+        data = {}
+        for caption_file in os.listdir(CAPTION_DIR):
             captions = {}
-            with open(yt.caption_filepath, 'r') as f:
+            with open(os.path.join(CAPTION_DIR, caption_file), 'r') as f:
                 time_line = False
                 caption = None
                 time = None
@@ -25,6 +27,7 @@ class ReadCaption(Step):
                         captions[caption] = time
                         time_line = False
 
-            yt.captions = captions
+            data[caption_file] = captions
 
+        pprint(data)
         return data
