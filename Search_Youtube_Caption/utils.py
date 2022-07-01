@@ -1,6 +1,6 @@
 import os
 
-from Search_Youtube_Caption.setting import CAPTION_DIR, VIDEO_DIR, DOWNLOAD_DIR
+from Search_Youtube_Caption.setting import CAPTION_DIR, VIDEO_DIR, DOWNLOAD_DIR, OUTPUT_DIR
 
 
 class Utils:
@@ -11,6 +11,7 @@ class Utils:
         os.makedirs(DOWNLOAD_DIR, exist_ok=True)
         os.makedirs(VIDEO_DIR, exist_ok=True)
         os.makedirs(CAPTION_DIR, exist_ok=True)
+        os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     def get_video_list_filepath(self, channel_id):
         return os.path.join(DOWNLOAD_DIR, channel_id + '.txt')
@@ -26,4 +27,7 @@ class Utils:
     def video_file_exists(self, yt):
         file_path = yt.video_filepath
         return os.path.exists(str(file_path)) and os.path.getsize(file_path) > 0
+
+    def get_output_filepath(self, channel_id, search_word):
+        return os.path.join(OUTPUT_DIR, f"{channel_id}_{search_word}.mp4")
 

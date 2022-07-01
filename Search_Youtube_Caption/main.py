@@ -5,6 +5,7 @@ from Search_Youtube_Caption.pipeline.Steps.download_captions import DownloadCapt
 from Search_Youtube_Caption.pipeline.Steps.read_caption import ReadCaption
 from Search_Youtube_Caption.pipeline.Steps.search import Search
 from Search_Youtube_Caption.pipeline.Steps.download_video import DownloadVideos
+from Search_Youtube_Caption.pipeline.Steps.edit_video import EditVideo
 from Search_Youtube_Caption.pipeline.Steps.postflight import Postflight
 from Search_Youtube_Caption.pipeline.Steps.step import StepException
 from Search_Youtube_Caption.pipeline.Steps.video_list import GetVideoList
@@ -23,6 +24,7 @@ def main():
     inputs = {
         'channel_id': CHANNEL_ID,
         'search_word': "incredible",
+        'limit': 20,
     }
 
     steps = [
@@ -33,6 +35,7 @@ def main():
         ReadCaption(),
         Search(),
         DownloadVideos(),
+        EditVideo(),
         Postflight(),
              ]
 

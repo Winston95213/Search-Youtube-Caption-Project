@@ -10,3 +10,4 @@ User_Agent = os.getenv('USER_AGENT')
 DOWNLOAD_DIR = 'downloads'
 VIDEO_DIR = os.path.join(DOWNLOAD_DIR, 'video')
 CAPTION_DIR = os.path.join(DOWNLOAD_DIR, 'captions')
+OUTPUT_DIR = 'outputs'
