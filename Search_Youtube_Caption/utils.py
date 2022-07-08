@@ -31,3 +31,6 @@ class Utils:
     def get_output_filepath(self, channel_id, search_word):
         return os.path.join(OUTPUT_DIR, f"{channel_id}_{search_word}.mp4")
 
+    def output_file_exist(self, id):
+        file_path = os.path.join(OUTPUT_DIR, id+"mp.4")
+        return os.path.exists(str(file_path)) and os.path.getsize(file_path) > 0
