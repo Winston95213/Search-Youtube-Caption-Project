@@ -1,5 +1,4 @@
-import os
-import time
+import os, time, logging
 from threading import Thread
 
 from pytube import YouTube
@@ -10,15 +9,16 @@ from .step import StepException
 
 class DownloadCaptions(Step):
     def process(self, data, inputs, utils):
+        logger = logging.getLogger('Logger')
         threads = []
         start = time.time()
 
         for yt in data:
-            print('downloading caption for', yt.id)
+            logger.info('downloading caption for' + yt.id)
             if utils.caption_file_exists(yt):
-                print('found existing caption file')
+                logger.info('found existing caption file')
                 continue
-            print(f"registering threads for downloading caption...")
+            logger.info(f"registering threads for downloading caption...")
             threads.append(Thread(target=self.get_caption, args=(yt,)))
 
         for thread in threads:
@@ -28,12 +28,14 @@ class DownloadCaptions(Step):
             thread.join()
 
         end = time.time()
-        print('took', end - start, 'seconds')
+        logger.info('took' +  str(end - start) + 'seconds')
 
         return data
 
     def get_caption(self, yt):
+        logger = logging.getLogger('Logger')
         try:
+            logger.info('Downloading caption for' + yt.id)
             source = YouTube(yt.url)
             en_caption = source.captions['a.en']
 
@@ -41,7 +43,7 @@ class DownloadCaptions(Step):
                 f.write(en_caption.generate_srt_captions())
 
         except (KeyError, AttributeError):
-            print('Error when downloading caption for: ', yt.url)
+            logger.debug('Error when downloading caption for: ' + yt.url)
 
 
 

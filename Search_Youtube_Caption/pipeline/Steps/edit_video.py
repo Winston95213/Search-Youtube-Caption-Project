@@ -1,3 +1,5 @@
+import logging
+
 from moviepy.editor import VideoFileClip, concatenate_videoclips
 from moviepy.video.VideoClip import TextClip
 from moviepy.video.compositing.CompositeVideoClip import CompositeVideoClip
@@ -8,22 +10,22 @@ from .step import Step
 class EditVideo(Step):
     def process(self, data, inputs, utils):
         clips = []
-
+        logger = logging.getLogger('Logger')
         invalid_clips = ["-nXsfXtTacE", "vUfbJH5GfuU", "2Aq_2qKn44g", "QWdhNKMZ1DI", "BPpFOM41DvY", "b9dWgUlMb9o", "1gHN-iY0KUc"]
         for found in data:
             if found.yt.id in invalid_clips:
                 continue
-            print("Video: ", found.yt.id)
-            print(self.parse_caption_time(found.time))
+            logger.info("Video: " +  found.yt.id)
+            logger.info(self.parse_caption_time(found.time))
             start, end = self.parse_caption_time(found.time)
             try:
                 video = VideoFileClip(found.yt.video_filepath).subclip(start, end)
                 clips.append(video)
             except ValueError as VE:
-                print(VE)
+                logger.debug(VE)
             if len(clips) >= inputs['limit']:
                 break
-        print(clips)
+        logger.info(clips)
 
         final_clip = concatenate_videoclips(clips)
         channel_id, search_word = inputs['channel_id'], inputs['search_word']

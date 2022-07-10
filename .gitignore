@@ -1,5 +1,5 @@
-downloads/
-outputs/
+Search_Youtube_Caption/downloads/
+Search_Youtube_Caption/outputs/
 test.py
 
 # Byte-compiled / optimized / DLL files
@@ -15,7 +15,7 @@ __pycache__/
 build/
 develop-eggs/
 dist/
-downloads/
+Search_Youtube_Caption/downloads/
 eggs/
 .eggs/
 lib/

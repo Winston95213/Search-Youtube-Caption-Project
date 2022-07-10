@@ -2,6 +2,7 @@ certifi==2022.6.15
 charset-normalizer==2.0.12
 decorator==4.4.2
 download==0.3.5
+humanfriendly==10.0
 idna==3.3
 imageio==2.19.3
 imageio-ffmpeg==0.4.7
@@ -17,3 +18,4 @@ six==1.16.0
 tqdm==4.64.0
 typing_extensions==4.2.0
 urllib3==1.26.9
+youtube-dl==2021.12.17

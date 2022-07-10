@@ -1,5 +1,6 @@
 import urllib.request
-import json
+import json, logging
+
 
 from Search_Youtube_Caption.pipeline.Steps.step import Step
 from Search_Youtube_Caption.setting import API_KEY, API_KEY2
@@ -8,10 +9,11 @@ from Search_Youtube_Caption.setting import API_KEY, API_KEY2
 class GetVideoList(Step):
 
     def process(self, data, inputs, utils):
+        logger = logging.getLogger('Logger')
         channel_id = inputs['channel_id']
 
         if utils.video_list_file_exists(channel_id):
-            print('Found existing video list file for channel id', channel_id)
+            logger.info('Found existing video list file for channel id'+ channel_id)
             return self.read_file(utils.get_video_list_filepath(channel_id))
 
         base_video_url = 'https://www.youtube.com/watch?v='
@@ -19,7 +21,7 @@ class GetVideoList(Step):
 
         first_url = base_search_url + 'key={}&channelId={}&part=snippet,id&order=date&maxResults=25'.format(API_KEY,
                                                                                                             channel_id)
-        print(first_url)
+        logger.info(first_url)
 
         video_links = []
         url = first_url
@@ -37,7 +39,7 @@ class GetVideoList(Step):
                 url = first_url + '&pageToken={}'.format(next_page_token)
             except KeyError:
                 break
-        print(video_links)
+        logger.info(video_links)
         self.write_to_file(video_links, utils.get_video_list_filepath(channel_id))
         return video_links
 

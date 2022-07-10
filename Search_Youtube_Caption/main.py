@@ -1,4 +1,5 @@
-import time, sys, getopt
+import time, sys, getopt, logging
+sys.path.append('../')   # For execute command line argument function
 
 from Search_Youtube_Caption.pipeline.Steps.preflight import Preflight
 from Search_Youtube_Caption.pipeline.Steps.video_list import GetVideoList
@@ -31,6 +32,25 @@ def print_usage():
     print("{:>6}{:<12}{}".format('-l', '--limit', 'The amount of video limitation to download'))
     print("{:>6}{:<12}{}".format('-c', '--clean', 'clean up the caption file and video file'))
     print("{:>6}{:<12}{}".format('-r', '--resolution', 'choose the resolution in of the video'))
+
+def config_logger():
+    logger = logging.getLogger('Logger')
+    logger.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s')
+
+    file_handler = logging.FileHandler('Search_Youtube_Caption.log')
+    file_handler.setLevel(logging.DEBUG)
+    file_handler.setFormatter(formatter)
+
+    stream_handler = logging.StreamHandler()
+    stream_handler.setLevel(logging.DEBUG)
+    stream_handler.setFormatter(formatter)
+
+    logger.addHandler(file_handler)
+    logger.addHandler(stream_handler)
+
+
+
 
 
 def main():
@@ -71,8 +91,7 @@ def main():
             else:
                 inputs['resolution'] = arg
 
-
-
+    config_logger()
     utils = Utils()
     if utils.output_file_exist(inputs['channel_id']):
         ans = input('Clips video for this search term of this channel already existed.\
